@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://aaronaheath.github.io/sitemap.xml 
