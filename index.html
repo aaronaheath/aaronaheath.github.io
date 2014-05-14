@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Web CMS</title>
+  <meta name="author" content="Aaron Heath">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts ">
+  <meta name="description" content="Content Modeling A content model is a representation of the types of content and their inter-relationships. Content Type A content type is a unit of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://aaronaheath.github.io">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Web CMS" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,7 +36,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Web CMS</a></h1>
   
     <h2>A blogging framework for hackers.</h2>
   
@@ -66,6 +66,174 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/13/content-modeling-with-alfresco/">Content Modeling With Alfresco</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-13T13:11:07-04:00" pubdate data-updated="true">May 13<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Content Modeling</h2>
+
+<p>A content model is a representation of the types of content and their inter-relationships.</p>
+
+<h2>Content Type</h2>
+
+<p>A content type is a unit of content. It is an abstraction that captures the essential characteristics (elements) of content that distinguish it from all other kinds of content. &ndash; See more at: <a href="http://www.clevegibbon.com/content-modeling/content-modelling-glossary/#sthash.RazBhmHA.dpuf">http://www.clevegibbon.com/content-modeling/content-modelling-glossary/#sthash.RazBhmHA.dpuf</a></p>
+
+<h2>Content Items</h2>
+
+<p>An instance of a individual content type</p>
+
+<h2>Content Modeling with Alfresco</h2>
+
+<p>Content modeling specifies how nodes stored in the content repository are constrained, imposing a formal structure on nodes that an ECM application can understand and enforce. Nodes can represent anything stored in the repository, such as folders, documents, XML fragments, renditions, collaboration sites, and people. Each node has a unique ID and is a container for any number of named properties, where property values can be of any data type, single or multi-valued.</p>
+
+<p>Content modeling puts the following constraints on the data structure:</p>
+
+<ul>
+<li> A node must be of a given type.</li>
+<li> A node must carry an enumerated set of properties.</li>
+<li> A property must be of a given data type.</li>
+<li> A value must be within a defined set of values.</li>
+<li> A node must be related to other nodes in a particular way.</li>
+</ul>
+
+
+<p>Out-of-the-box, the Repository Data Dictionary is pre-populated with definitions that describe common Content constructs such as Folders, Files and meta-data schemes. However, each Content Application will have its own content requirements and as such the Data Dictionary is extendable allowing the Repository to manage new types of Content.</p>
+
+<h2>Saks Content Model (saksModel.xml)</h2>
+
+<h3>Schema Namespaces</h3>
+
+<p><model name="saks:saksmodel" xmlns="http://www.alfresco.org/model/dictionary/1.0"></p>
+
+<pre><code>&lt;description&gt;Saks 5th Avenue Content Model&lt;/description&gt;
+&lt;author&gt;aheath&lt;/author&gt;
+&lt;version&gt;4.9&lt;/version&gt;
+&lt;imports&gt;
+    &lt;import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" /&gt;
+    &lt;import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" /&gt;
+&lt;import uri="http://www.alfresco.org/model/system/1.0" prefix="sys" /&gt;
+&lt;/imports&gt;
+&lt;namespaces&gt;
+    &lt;namespace uri="http://www.saks.com/model/content/1.0" prefix="saks" /&gt;
+&lt;/namespaces&gt;
+</code></pre>
+
+<h3>Constraints</h3>
+
+<pre><code>&lt;constraints&gt;
+    &lt;constraint name="saks:linkTypeList" type="LIST"&gt;
+    &lt;parameter name="allowedValues"&gt;
+        &lt;list&gt;
+            &lt;value&gt;DHTML&lt;/value&gt;
+            &lt;value&gt;Empty&lt;/value&gt;
+        &lt;value&gt;GWP&lt;/value&gt;
+        &lt;value&gt;Multi-link&lt;/value&gt;
+        &lt;value&gt;New Tab&lt;/value&gt;
+        &lt;value&gt;Standard&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/parameter&gt;
+    &lt;/constraint&gt;
+    ... 
+&lt;/constraints&gt;
+</code></pre>
+
+<h3>Content Types</h3>
+
+<pre><code>&lt;type name="saks:banner"&gt;
+    &lt;title&gt;Banner&lt;/title&gt;
+    &lt;parent&gt;saks:clickableImage&lt;/parent&gt;
+    &lt;properties&gt;
+        &lt;property name="saks:linkType"&gt;
+        &lt;type&gt;d:text&lt;/type&gt;
+        &lt;mandatory&gt;false&lt;/mandatory&gt;
+            &lt;default&gt;Standard&lt;/default&gt;
+        &lt;constraints&gt;
+            &lt;constraint ref="saks:linkTypeList" /&gt;
+        &lt;/constraints&gt;
+    &lt;/property&gt;
+    &lt;/properties&gt;
+&lt;/type&gt;
+</code></pre>
+
+<h3>Child Associations</h3>
+
+<pre><code>&lt;type name="cm:folder"&gt;
+    &lt;title&gt;Folder&lt;/title&gt;
+    &lt;parent&gt;cm:cmobject&lt;/parent&gt;
+    &lt;associations&gt;
+        &lt;child-association name="cm:contains"&gt;
+            &lt;source&gt;
+                &lt;mandatory&gt;false&lt;/mandatory&gt;
+                &lt;many&gt;false&lt;/many&gt;
+             &lt;/source&gt;
+             &lt;target&gt;
+                 &lt;class&gt;sys:base&lt;/class&gt;
+                 &lt;mandatory&gt;false&lt;/mandatory&gt;
+                 &lt;many&gt;true&lt;/many&gt;
+             &lt;/target&gt;
+             &lt;duplicate&gt;false&lt;/duplicate&gt;
+             &lt;propagateTimestamps&gt;true&lt;/propagateTimestamps&gt;
+         &lt;/child-association&gt;
+     &lt;/associations&gt;
+  &lt;/type&gt;
+</code></pre>
+
+<h3>Aspects &amp; Peer Associations</h3>
+
+<pre><code>&lt;aspects&gt;    
+    &lt;aspect name="saks:simpleimageAssociation"&gt;
+    &lt;title&gt;Simple Image Association&lt;/title&gt;
+   &lt;associations&gt;
+       &lt;association name="saks:simpleImageAssociation"&gt;
+           &lt;source&gt;
+           &lt;mandatory&gt;false&lt;/mandatory&gt;
+           &lt;many&gt;false&lt;/many&gt;
+       &lt;/source&gt;
+       &lt;target&gt;
+          &lt;class&gt;saks:image&lt;/class&gt;
+          &lt;mandatory&gt;false&lt;/mandatory&gt;
+          &lt;many&gt;true&lt;/many&gt;
+       &lt;/target&gt;
+       &lt;/association&gt;
+   &lt;/associations&gt;
+   &lt;/aspect&gt;
+   ...
+</code></pre>
+
+<p>   </aspects></p>
+
+<p>The above aspect can be applied to any content of any Content Type at run-time. In this particular case, once applied, the content item will be able to have a peer association to the saks:image type, named saks:simpleimageAssociation.</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -77,6 +245,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/05/13/content-modeling-with-alfresco/">Content Modeling With Alfresco</a>
+      </li>
     
   </ul>
 </section>
@@ -91,7 +263,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Your Name -
+  Copyright &copy; 2014 - Aaron Heath -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

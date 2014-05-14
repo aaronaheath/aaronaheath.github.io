@@ -1,12 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
+        <loc>http://aaronaheath.github.io/blog/2014/05/13/content-modeling-with-alfresco/</loc>
+        <lastmod>2014-05-13T20:58:19-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://aaronaheath.github.io/blog/archives/</loc>
-        <lastmod>2014-05-13T12:37:48-04:00</lastmod>
+        <lastmod>2014-05-13T20:58:19-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://aaronaheath.github.io/content-modeling/</loc>
+        <lastmod>2014-05-13T19:57:25-04:00</lastmod>
     </url>
     <url>
         <loc>http://aaronaheath.github.io/</loc>
-        <lastmod>2014-05-13T12:37:48-04:00</lastmod>
+        <lastmod>2014-05-13T20:58:19-04:00</lastmod>
     </url>
     <url>
         <loc>http://aaronaheath.github.io/robots.txt</loc>
